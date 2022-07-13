@@ -74,12 +74,12 @@ export default function Home() {
         <p className="description">
           Get started by editing <code>pages/index.js</code> 
   </p>
-          <p>" envVar.apiUrl:" </p>
+          <p>" Variables de entorno:" </p>
           <p className='post'> { posts} </p>
-          <p> Hostname: </p>
+          {/* <p> Hostname: </p> */}
           
        
-        <h1>{JSON.stringify(host)}</h1>
+        {/* <h1>{JSON.stringify(host)}</h1> */}
 
       </main>
 
