@@ -20,8 +20,9 @@ export default function Home() {
         const hostname = window && window.location && window.location.hostname;
         console.log("hostname:",hostname);
         setHost(hostname);
-        var url = 'http://localhost:3001';
-     
+        var url = 'http://ec2-3-84-30-125.compute-1.amazonaws.com:3001/';
+        if(posts == null || posts === "" ||posts !== undefined)
+        { 
         fetch(url, {
           method: 'GET', 
            headers:{
@@ -38,7 +39,7 @@ export default function Home() {
             setPosts(JSON.stringify(response));
 
          });
-
+        }
 
       } catch (err) {
           console.log(err);
