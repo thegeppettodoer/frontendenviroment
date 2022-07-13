@@ -21,7 +21,8 @@ export default function Home() {
         console.log("hostname:",hostname);
         setHost(hostname);
         var url = 'http://ec2-3-84-30-125.compute-1.amazonaws.com:3001/';
-        if(posts == null || posts === "" ||posts !== undefined)
+        var envLocal = localStorage.getItem("env");
+        if(!(envLocal!==null & envLocal !=='' & envLocal !==undefined))
         { 
         fetch(url, {
           method: 'GET', 
@@ -32,13 +33,19 @@ export default function Home() {
         }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
-          console.log('xSuccess:', response) 
+
+          console.log('Se ejecuta fetch para obtener variables de entorno:'); 
+          console.log('xSuccess:', response) ;
           // console.log('xenvApi:',   response.apiUrl)
           // console.log('xenvApi:', typeof response.apiUrl)
           // if( response.apiUrl)
+          localStorage.setItem("env",JSON.stringify(response));
             setPosts(JSON.stringify(response));
 
          });
+        }else{
+          setPosts(localStorage.getItem("env"));
+
         }
 
       } catch (err) {
@@ -68,12 +75,12 @@ export default function Home() {
 
         <p className="description">
           Get started by editing <code>pages/index.js</code> 
- 
-          <code>" envVar.apiUrl:" </code>
-          <code className='post'> { posts} </code>
-          <code> Hostname: </code>
+  </p>
+          <p>" envVar.apiUrl:" </p>
+          <p className='post'> { posts} </p>
+          <p> Hostname: </p>
           
-        </p>
+       
         <h1>{JSON.stringify(host)}</h1>
 
       </main>
