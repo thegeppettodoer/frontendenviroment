@@ -1,10 +1,62 @@
 import Head from 'next/head'
+ // import Link from "next/link";
+// import envApi from "https://demonext.blob.core.windows.net/demo/env.json";
+import React, { useState,useEffect } from 'react'; // <--- import the hook
+ 
+
+
+  
+ 
 
 export default function Home() {
-  return (
+  const [posts, setPosts] = useState([]);
+  const [host, setHost] = useState([]);
+
+  
+  useEffect( () => { 
+    async function fetchData() {
+      try {
+
+        const hostname = window && window.location && window.location.hostname;
+        console.log("hostname:",hostname);
+        setHost(hostname);
+        var url = 'http://localhost:3001';
+     
+        fetch(url, {
+          method: 'GET', 
+           headers:{
+            'Content-Type': 'application/json',
+            'enviroment':"www.aws.com"
+          }
+        }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+          console.log('xSuccess:', response) 
+          // console.log('xenvApi:',   response.apiUrl)
+          // console.log('xenvApi:', typeof response.apiUrl)
+          // if( response.apiUrl)
+            setPosts(JSON.stringify(response));
+
+         });
+
+
+      } catch (err) {
+          console.log(err);
+      }
+  }
+  fetchData();
+
+ 
+    return {
+
+    }
+  }, []);
+
+
+   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>{posts}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -14,43 +66,20 @@ export default function Home() {
         </h1>
 
         <p className="description">
-          Get started by editing <code>pages/index.js</code>
+          Get started by editing <code>pages/index.js</code> 
+ 
+          <code>" envVar.apiUrl:" </code>
+          <code className='post'> { posts} </code>
+          <code> Hostname: </code>
+          
         </p>
+        <h1>{JSON.stringify(host)}</h1>
 
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
       </main>
 
       <footer>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="#"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -203,7 +232,43 @@ export default function Home() {
         * {
           box-sizing: border-box;
         }
+
+        .post{
+          color:#c43
+        }
       `}</style>
     </div>
   )
 }
+
+
+
+
+
+// URL general env.json
+
+//   'https://demonext.blob.core.windows.net/demo/env';
+
+
+// .......................
+
+// qa...swasp
+// dev
+// prod
+// dummy
+
+
+
+// .env
+
+// env   ( enviroment,localhost/source)
+//              .....dev
+//               ....qa
+//                 ..prod
+
+
+
+ 
+
+
+
