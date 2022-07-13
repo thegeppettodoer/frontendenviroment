@@ -28,20 +28,18 @@ export default function Home() {
           method: 'GET', 
            headers:{
             'Content-Type': 'application/json',
-            'enviroment':"www.aws.com"
+            'enviroment':hostname
           }
         }).then(res => res.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
-
           console.log('Se ejecuta fetch para obtener variables de entorno:'); 
           console.log('xSuccess:', response) ;
           // console.log('xenvApi:',   response.apiUrl)
           // console.log('xenvApi:', typeof response.apiUrl)
           // if( response.apiUrl)
           localStorage.setItem("env",JSON.stringify(response));
-            setPosts(JSON.stringify(response));
-
+          setPosts(JSON.stringify(response));
          });
         }else{
           setPosts(localStorage.getItem("env"));
